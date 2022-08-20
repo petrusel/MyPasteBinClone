@@ -2,3 +2,5 @@ cartofi
 paine
 rosii
 ardei
+banane
+mere
