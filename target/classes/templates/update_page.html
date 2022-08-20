@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Registration</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+    <style>
+        body{
+            margin: 0;
+            align-items: center;
+        }
+
+        .card {
+            background-color: #525E69;
+            width: 100%;
+            height: auto;
+        }
+
+        .card-header{
+            background-color: #0a3d60;
+            width: 100%;
+            height: 5rem;
+            text-align: center;
+        }
+
+        .card-body{
+            margin: 0 auto;
+            background-color: #49677d;
+            width: 90%;
+            min-height: 45rem;
+            height: auto;
+            align-items: center;
+        }
+
+        #id_pastebin_btn{
+            font-size: 1.5rem;
+            margin-right: 30rem;
+        }
+
+        .container-fluid{
+          width: 50%;
+          text-align: left;
+          font-size: 1rem;
+          margin-top: 5rem;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!--HEADER-->
+    <div class="card-header">
+        <a id="id_pastebin_btn" th:href="@{/}" role="button" class="btn btn-secondary btn-lg">PASTEBIN</a>
+        <div sec:authorize="isAuthenticated()" class="btn-group drops tart">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <span sec:authentication="principal.username"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a th:href="@{/text/addText}" class="dropdown-item" >Add text</a></li>
+                <li><a th:href="@{/text/allText}" class="dropdown-item" >My texts</a></li>
+                <li><a th:href="@{/}" class="dropdown-item" >User details</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a th:href="@{/logout}" class="dropdown-item">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!--BODY-->
+    <div class="card-body">
+        <div class="container-fluid">
+            <div th:if="${param.success}" class="mb-3">
+                <div class="alert alert-success" role="alert">
+                    You're successfully updated!
+                </div>
+            </div>
+            <!--Update form-->
+            <form th:action="@{/updateUser/{id}(id=${user.id})}" th:object="${user}" method="post">
+                <!--First name-->
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">
+                        First name:
+                    </label>
+                    <input id="firstName" th:field="*{firstName}" class="form-control" required autofocus="autofocus"/>
+                </div>
+                <!--Last name-->
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">
+                        Last name:
+                    </label>
+                    <input id="lastName" th:field="*{lastName}" class="form-control" required autofocus="autofocus"/>
+                </div>
+                <!--E-mail-->
+                <div class="mb-3">
+                    <label for="email" class="form-label">
+                        E-mail:
+                    </label>
+                    <input id="email" th:field="*{email}" class="form-control" required autofocus="autofocus"/>
+                </div>
+                <!--Password-->
+                <div class="mb-3">
+                    <label for="password" class="form-label">
+                        Password:
+                    </label>
+                    <input id="password" type="password" th:field="*{password}" class="form-control" required autofocus="autofocus"/>
+                </div>
+                <!--Update button-->
+                <div>
+                    <button type="submit" class="btn btn-secondary">Update</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous">
+</script>
+</body>
+</html>
