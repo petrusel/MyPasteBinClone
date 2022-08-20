@@ -3,4 +3,6 @@ paine
 rosii
 ardei
 banane
+capsune
+
 
