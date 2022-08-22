@@ -19,30 +19,34 @@ public class PasteService {
         this.userRepository = userRepository;
     }
 
-    public void addNewText(String email, Paste paste) {
+    public void addNewPaste(String email, Paste paste) {
         User loggedUser = userRepository.findByEmail(email);
         paste.setUser(loggedUser);
+        System.out.println("PasteService addNewPaste()");
         pasteRepository.save(paste);
     }
 
-    public void updateText(Long id, Paste paste) {
+    public void updatePaste(Long id, Paste paste) {
         Paste existingPaste = pasteRepository.getReferenceById(id);
         existingPaste.setTitle(paste.getTitle());
         existingPaste.setContent(paste.getContent());
+        System.out.println("PasteService updatePaste()");
         pasteRepository.save(existingPaste);
     }
 
-    public List<Paste> getAllTextsByUserEmail(String email) {
+    public List<Paste> getAllPastesByUserEmail(String email) {
         User loggedUser = userRepository.findByEmail(email);
+        System.out.println("PasteService getAllPastesByUserEmail()");
         return loggedUser.getPastes();
     }
 
-    public Paste getTextById(Long textId) {
-        return pasteRepository.getReferenceById(textId);
+    public Paste getPasteById(Long pasteId) {
+        return pasteRepository.getReferenceById(pasteId);
     }
 
-    public void deleteText(Long textId) {
+    public void deletePaste(Long textId) {
         Paste paste = pasteRepository.getReferenceById(textId);
+        System.out.println("PasteService deletePaste()");
         pasteRepository.delete(paste);
     }
 }

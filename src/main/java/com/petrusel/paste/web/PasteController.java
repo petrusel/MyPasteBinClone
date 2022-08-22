@@ -25,47 +25,54 @@ public class PasteController {
     public String showAddTextForm(Model model) {
         Paste paste = new Paste();
         model.addAttribute("paste", paste);
+        System.out.println("PasteController formular paste");
         return "add_text";
     }
 
     @PostMapping("/addText")
     public String saveNewText(@ModelAttribute("paste") Paste paste, Principal principal) {
         String email = principal.getName();
-        pasteService.addNewText(email, paste);
+        System.out.println("PasteController save paste");
+        pasteService.addNewPaste(email, paste);
         return "redirect:/allText";
     }
 
     @GetMapping("/allText")
-    public String showAllText(Model model, Principal principal) {
+    public String showAllPastes(Model model, Principal principal) {
         String email = principal.getName();
-        List<Paste> allUserTexts = pasteService.getAllTextsByUserEmail(email);
-        model.addAttribute("allUserTexts", allUserTexts);
+        System.out.println("PasteController afisam toate pastes");
+        List<Paste> allUserPastes = pasteService.getAllPastesByUserEmail(email);
+        model.addAttribute("allUserTexts", allUserPastes);
         return "all_text";
     }
 
     @GetMapping("/updateText/{id}")
-    public String showUpdateTextForm(@PathVariable Long id, Model model) {
-        Paste paste = pasteService.getTextById(id);
+    public String showUpdatePasteForm(@PathVariable Long id, Model model) {
+        Paste paste = pasteService.getPasteById(id);
         model.addAttribute("paste", paste);
+        System.out.println("PasteController paste formular update");
         return "update_text";
     }
 
     @PostMapping("/updateText/{id}")
     public String saveUpdatedText(@PathVariable Long id, Paste paste) {
-        pasteService.updateText(id, paste);
+        System.out.println("PasteController paste save update");
+        pasteService.updatePaste(id, paste);
         return "redirect:/allText";
     }
 
     @GetMapping("/deleteText/{id}")
-    public String deleteText(@PathVariable Long id) {
-        pasteService.deleteText(id);
+    public String deletePaste(@PathVariable Long id) {
+        System.out.println("PasteController sterge paste");
+        pasteService.deletePaste(id);
         return "redirect:/allText";
     }
 
     @GetMapping("/showText/{id}")
-    public String showSpecificText(@PathVariable Long id, Model model) {
-        Paste paste = pasteService.getTextById(id);
+    public String showPasteDetails(@PathVariable Long id, Model model) {
+        Paste paste = pasteService.getPasteById(id);
         model.addAttribute("paste", paste);
+        System.out.println("PasteController afisam detalii paste");
         return "show_text";
     }
 }
